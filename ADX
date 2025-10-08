@@ -1,0 +1,13 @@
+ADX query time
+
+ADXQuery 
+| where TimeGenerated > datetime('2025-10-07T19:12:18.9830317Z') and TimeGenerated < datetime('2025-10-07T19:15:18.9830317Z')
+| order by TimeGenerated desc
+
+
+
+AppTraces
+| where AppRoleName == "devicie-func-prod-aue-devicieapi"
+| where TimeGenerated > datetime('2025-10-07T19:12:18.9830317Z') and TimeGenerated < datetime('2025-10-07T19:15:18.9830317Z')
+| order by TimeGenerated desc
+
