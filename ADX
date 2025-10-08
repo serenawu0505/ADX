@@ -11,3 +11,20 @@ AppTraces
 | where TimeGenerated > datetime('2025-10-07T19:12:18.9830317Z') and TimeGenerated < datetime('2025-10-07T19:15:18.9830317Z')
 | order by TimeGenerated desc
 
+
+
+AppServiceConsoleLogs    
+| where _ResourceId has "devicie-rg-aue-managementapi"
+| where ResultDescription contains "ERROR"
+    or ResultDescription contains "INFO"
+    or ResultDescription contains "WARN"
+    or ResultDescription contains "DEBUG"
+| extend record = parse_json(ResultDescription).record
+| extend level = record.level.name
+| extend text = record.message
+| extend tenant_id = record.extra.partner_tenant_id
+| extend user_id = record.extra.user
+| extend execution_id_ = record.extra.partner_tenant_id.execution_id
+| project TimeGenerated, level, text, tenant_id, user_id, record
+| order by TimeGenerated
+
